@@ -1,5 +1,10 @@
+import LoggedInView from '../components/LoggedInView';
+
 const Home = () => {
-  return <div>Home Page</div>;
+  if (false) {
+    return <LoggedInView />;
+  }
+  return <div style={{ color: 'white' }}>Home Page</div>;
 };
 
 export default Home;
