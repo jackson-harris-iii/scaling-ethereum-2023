@@ -1,10 +1,11 @@
 {
-  "name": "next-netlify-starter",
-  "version": "0.5.0",
-  "private": true,
+  "name": "scaling-ethereum-eth-global-2023-submission",
+  "version": "0.1.0",
+  "author": "Jackson Harris III <jackon.harris3@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build --output public",
+    "build": "next build",
     "export": "next export"
   },
   "dependencies": {
@@ -15,7 +16,7 @@
     "isotope-layout": "^3.0.6",
     "jquery": "^3.6.0",
     "jquery-bridget": "^3.0.0",
-    "next": "^12.0.1",
+    "next": "^13.1.5",
     "on-react-countdown": "^1.1.2",
     "popper.js": "^1.16.1",
     "react": "^17.0.2",
