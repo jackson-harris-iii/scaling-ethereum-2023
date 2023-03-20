@@ -11,17 +11,29 @@ import {
   walletConnectProvider,
 } from '@web3modal/ethereum';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, polygonZkEvmTestnet, optimismGoerli, optimism } from 'wagmi/chains'; //scrollTestnet was not found???
+import {
+  mainnet,
+  polygon,
+  polygonZkEvmTestnet,
+  optimismGoerli,
+  optimism,
+} from 'wagmi/chains'; //scrollTestnet was not found???
 
 function MyApp({ Component, pageProps }) {
-  const chains = [ mainnet, polygon, polygonZkEvmTestnet, optimismGoerli, optimism];
+  const chains = [
+    mainnet,
+    polygon,
+    polygonZkEvmTestnet,
+    optimismGoerli,
+    optimism,
+  ];
 
-    // Wagmi client
-    // const { provider } = configureChains(chains, [
-    //   walletConnectProvider({
-    //     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
-    //   }),
-    // ]);
+  // Wagmi client
+  const { provider } = configureChains(chains, [
+    walletConnectProvider({
+      projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+    }),
+  ]);
 
   return (
     <>
