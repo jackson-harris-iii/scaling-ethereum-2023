@@ -7,8 +7,8 @@ import '../assets/css/slide-countdown.scss';
 import { Web3Modal } from '@web3modal/react';
 import {
   EthereumClient,
-  modalConnectors,
-  walletConnectProvider,
+  w3mProvider,
+  w3mConnectors,
 } from '@web3modal/ethereum';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import {
@@ -17,6 +17,7 @@ import {
   polygonZkEvmTestnet,
   optimismGoerli,
   optimism,
+  scrollTestnet,
 } from 'wagmi/chains'; //scrollTestnet was not found???
 
 function MyApp({ Component, pageProps }) {
@@ -26,14 +27,25 @@ function MyApp({ Component, pageProps }) {
     polygonZkEvmTestnet,
     optimismGoerli,
     optimism,
+    scrollTestnet,
   ];
 
   // Wagmi client
   const { provider } = configureChains(chains, [
-    walletConnectProvider({
-      projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+    w3mProvider({
+      projectId: 'd1e4fcf51fe6b9c0df4204ebe120ffd5',
     }),
   ]);
+  const wagmiClient = createClient({
+    autoConnect: true,
+    connectors: w3mConnectors({
+      projectId: 'd1e4fcf51fe6b9c0df4204ebe120ffd5',
+      version: 1,
+      chains,
+    }),
+    provider,
+  });
+  const ethereumClient = new EthereumClient(wagmiClient, chains);
 
   return (
     <>
@@ -81,7 +93,13 @@ function MyApp({ Component, pageProps }) {
           crossOrigin="anonymous"
         ></script>
       </Head>
-      <Component {...pageProps} />
+      <WagmiConfig client={wagmiClient}>
+        <Component {...pageProps} />
+      </WagmiConfig>
+      <Web3Modal
+        projectId={'d1e4fcf51fe6b9c0df4204ebe120ffd5'}
+        ethereumClient={ethereumClient}
+      />
     </>
   );
 }
