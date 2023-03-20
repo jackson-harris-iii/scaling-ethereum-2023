@@ -1,12 +1,28 @@
+import React from 'react';
 import Head from 'next/head';
-
 import '../assets/css/global.css';
-
 import '../assets/css/countdown.css';
 import '../assets/css/flip-countdown.scss';
 import '../assets/css/slide-countdown.scss';
+import { Web3Modal } from '@web3modal/react';
+import {
+  EthereumClient,
+  modalConnectors,
+  walletConnectProvider,
+} from '@web3modal/ethereum';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { mainnet, polygon, polygonZkEvmTestnet, optimismGoerli, optimism } from 'wagmi/chains'; //scrollTestnet was not found???
 
 function MyApp({ Component, pageProps }) {
+  const chains = [ mainnet, polygon, polygonZkEvmTestnet, optimismGoerli, optimism];
+
+    // Wagmi client
+    // const { provider } = configureChains(chains, [
+    //   walletConnectProvider({
+    //     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+    //   }),
+    // ]);
+
   return (
     <>
       <Head>

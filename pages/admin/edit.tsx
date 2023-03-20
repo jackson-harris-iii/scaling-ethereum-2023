@@ -1,5 +1,5 @@
 const AdminEdit = () => {
-  return <div>AdminEdit Page</div>;
+  return <div style={{ color: 'white' }}>AdminEdit Page</div>;
 };
 
 export default AdminEdit;
