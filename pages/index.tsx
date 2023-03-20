@@ -1,6 +1,9 @@
+import React from 'react';
 import LoggedInView from '../components/LoggedInView';
 
+
 const Home = () => {
+
   if (false) {
     return <LoggedInView />;
   }
