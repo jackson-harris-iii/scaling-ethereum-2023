@@ -8,6 +8,12 @@ const Home = () => {
   //hook to access wallet connect user address
   const { address, isConnecting, isDisconnected } = useAccount();
 
+
+  // useEffect(() => {
+  //   Router.push('/collections');
+  // }, []);
+
+
   useEffect(() => {
     if (address && address.length > 10) {
       Router.push('/collections');
