@@ -1,5 +1,12 @@
 import { NFTStorage } from 'nft.storage';
 import { useState } from 'react';
+import { Polybase } from '@polybase/client';
+
+const db = new Polybase({
+  defaultNamespace:
+    'pk/0x491e5edec4b6e998d4c11f0b6fa0eb5f9c0f83f2abb302bddb0027ad9bc1a9f35263e3033a635022be1fe3c85d213ccc9980b57edf3032b50b73ca3e398d76db/se-2023',
+});
+
 const CreateNFT = () => {
   const [submitting, isSubmitting] = useState();
   const [ipfs, setIpfs] = useState(false);
@@ -15,9 +22,9 @@ const CreateNFT = () => {
 
   const createItem = async () => {
     try {
-      const data = new File([image], selectedFile, { type: 'image/png' });
-      const ipfsUrl = await storeImage(data);
-      console.log('here is the ipfsUrl', ipfsUrl);
+      // const data = new File([image], selectedFile, { type: 'image/png' });
+      // const ipfsUrl = await storeImage(data);
+      // console.log('here is the ipfsUrl', ipfsUrl);
     } catch (e) {
       console.log('this is the error', e);
       alert(e);
@@ -121,7 +128,7 @@ const CreateNFT = () => {
 
               <div className="col-12 col-md-12">
                 {/* <label className="text-white">doing this because trash</label> */}
-                <label className="text-white">ipfslink</label>
+                <label className="text-white">Image IPFS link</label>
                 <div className="group">
                   <span className="highlight"></span>
                   <span className="bar"></span>
