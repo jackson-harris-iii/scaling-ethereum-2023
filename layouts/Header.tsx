@@ -74,8 +74,8 @@ function Header({ Title }) {
                 </div>
               </li> */}
               <li className="nav-item">
-                <Link legacyBehavior href="/Activity">
-                  <a className="nav-link">Activity</a>
+                <Link legacyBehavior href="/admin">
+                  <a className="nav-link">Admin</a>
                 </Link>
               </li>
 

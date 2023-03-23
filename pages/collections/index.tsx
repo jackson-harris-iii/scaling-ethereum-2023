@@ -39,7 +39,7 @@ const Home = () => {
         <div className="row mb-5">
           <Header Title={'se2023-project'} />
         </div>
-        <ListedItems nfts={NFTs} />
+        <ListedItems nfts={NFTs} admin={false} />
       </div>
     </>
   );
