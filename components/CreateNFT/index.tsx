@@ -11,7 +11,6 @@ const CreateNFT = () => {
   const [submitting, isSubmitting] = useState();
   const [ipfs, setIpfs] = useState(false);
   const [image, setImage] = useState(null);
-
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [description, setDescription] = useState('');
@@ -86,7 +85,7 @@ const CreateNFT = () => {
               </div>
 
               {/* Fix this do not submit this like  trash dev... */}
-              {/* <div className="col-12 col-md-12">
+              <div className="col-12 col-md-12">
                 <p className="w-text">Upload Item File</p>
                 <div className="group-file">
                   <p className="g-text">
@@ -107,7 +106,7 @@ const CreateNFT = () => {
                   </label>
                   <br />
                 </div>
-              </div> */}
+              </div>
 
               <div className="col-12 col-md-12">
                 <label className="text-white">Name</label>
