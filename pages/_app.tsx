@@ -33,13 +33,13 @@ function MyApp({ Component, pageProps }) {
   // Wagmi client
   const { provider } = configureChains(chains, [
     w3mProvider({
-      projectId: 'd1e4fcf51fe6b9c0df4204ebe120ffd5',
+      projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
     }),
   ]);
   const wagmiClient = createClient({
     autoConnect: true,
     connectors: w3mConnectors({
-      projectId: 'd1e4fcf51fe6b9c0df4204ebe120ffd5',
+      projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
       version: 1,
       chains,
     }),
@@ -97,7 +97,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </WagmiConfig>
       <Web3Modal
-        projectId={'d1e4fcf51fe6b9c0df4204ebe120ffd5'}
+        projectId={process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID}
         ethereumClient={ethereumClient}
       />
     </>
