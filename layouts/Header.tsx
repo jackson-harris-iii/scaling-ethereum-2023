@@ -8,6 +8,7 @@ import { useAccount } from 'wagmi';
 // import { NavbarLogo } from '../../utils/allImgs';
 import { Addshrink } from '../utils';
 import { Polybase } from '@polybase/client';
+import { ethPersonalSign } from '@polybase/eth';
 import { ethers } from 'ethers';
 
 const db = new Polybase({
@@ -16,24 +17,40 @@ const db = new Polybase({
 });
 
 const checkForUser = async (address: string) => {
+  const col = db.collection('User');
+  const doc = col.record(address);
+  const user = await doc.get().catch(() => null);
+  if (user) {
+    return;
+  }
+
+  await db.signer((data) => {
+    return {
+      h: 'eth-personal-sign',
+      sig: ethPersonalSign(process.env.NEXT_PUBLIC_COI_PRIVATE, data),
+    };
+  });
   const collectionReference = db.collection('User');
 
-  const { data } = await collectionReference
-    .where('publicKey', '==', address)
-    .get();
-  console.log('here is the data', data);
-  console.log('here is the PRIVATE', process.env.NEXT_PUBLIC_COI_PRIVATE);
-  console.log('here is the PUBLIC', process.env.NEXT_PUBLIC_COI_PUBLIC);
+  const { data } = await collectionReference.where('id', '==', address).get();
+  // console.log('here is the address', address);
+  // console.log('here is the data', data);
+  // console.log('here is the PRIVATE', process.env.NEXT_PUBLIC_COI_PRIVATE);
+  // console.log('here is the PUBLIC', process.env.NEXT_PUBLIC_COI_PUBLIC);
 
   if (data.length === 0) {
-    let coi = process.env.NEXT_PUBLIC_COI_PUBLIC.substring(2);
     const recordData = await collectionReference.create([
-      address,
-      coi,
-      address,
+      address, //sets the user colleciton id to the current user address
+      address, //sets the userPublicKey to the current user address
+      address, //sets the user name to the current user address
     ]);
+
     console.log('here is the recordData', recordData);
   }
+  // const response = await collectionReference
+  //   .record(address)
+  //   .call('setName', [address]);
+  // console.log('here is the response', response);
 };
 
 function Header({ Title }) {

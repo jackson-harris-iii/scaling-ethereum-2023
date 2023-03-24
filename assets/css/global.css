@@ -666,6 +666,15 @@ ol {
     color: #fff;
 }
 
+/* .back-btn {
+    background-image: linear-gradient(130deg, #eb3fa9 0%, #395ff6 50%, #eb3fa9 100%) !important;
+}
+
+.back-btn :hover {
+    background-position: right center;
+    color: #fff;
+} */
+
 
 .b-text {
     color: #272e3a !important;
