@@ -7,6 +7,51 @@ import { useAccount } from 'wagmi';
 // import './navbar.css'
 // import { NavbarLogo } from '../../utils/allImgs';
 import { Addshrink } from '../utils';
+import { Polybase } from '@polybase/client';
+import { ethPersonalSign } from '@polybase/eth';
+import { ethers } from 'ethers';
+
+const db = new Polybase({
+  defaultNamespace:
+    'pk/0x491e5edec4b6e998d4c11f0b6fa0eb5f9c0f83f2abb302bddb0027ad9bc1a9f35263e3033a635022be1fe3c85d213ccc9980b57edf3032b50b73ca3e398d76db/se-2023',
+});
+
+const checkForUser = async (address: string) => {
+  const col = db.collection('User');
+  const doc = col.record(address);
+  const user = await doc.get().catch(() => null);
+  if (user) {
+    return;
+  }
+
+  await db.signer((data) => {
+    return {
+      h: 'eth-personal-sign',
+      sig: ethPersonalSign(process.env.NEXT_PUBLIC_COI_PRIVATE, data),
+    };
+  });
+  const collectionReference = db.collection('User');
+
+  const { data } = await collectionReference.where('id', '==', address).get();
+  // console.log('here is the address', address);
+  // console.log('here is the data', data);
+  // console.log('here is the PRIVATE', process.env.NEXT_PUBLIC_COI_PRIVATE);
+  // console.log('here is the PUBLIC', process.env.NEXT_PUBLIC_COI_PUBLIC);
+
+  if (data.length === 0) {
+    const recordData = await collectionReference.create([
+      address, //sets the user colleciton id to the current user address
+      address, //sets the userPublicKey to the current user address
+      address, //sets the user name to the current user address
+    ]);
+
+    console.log('here is the recordData', recordData);
+  }
+  // const response = await collectionReference
+  //   .record(address)
+  //   .call('setName', [address]);
+  // console.log('here is the response', response);
+};
 
 function Header({ Title }) {
   const { address, isConnecting, isDisconnected } = useAccount();
@@ -20,6 +65,7 @@ function Header({ Title }) {
     if (!address || (address.length < 10 && router)) {
       router.push('/');
     }
+    checkForUser(address);
   }, [address]);
 
   // if (isConnecting) {

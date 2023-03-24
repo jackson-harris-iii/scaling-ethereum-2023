@@ -1,6 +1,9 @@
 import { NFTStorage } from 'nft.storage';
 import { useState } from 'react';
 import { Polybase } from '@polybase/client';
+import { ethPersonalSign } from '@polybase/eth';
+import { nanoid } from 'nanoid';
+import { useAccount } from 'wagmi';
 
 const db = new Polybase({
   defaultNamespace:
@@ -11,17 +14,43 @@ const CreateNFT = () => {
   const [submitting, isSubmitting] = useState();
   const [ipfs, setIpfs] = useState(false);
   const [image, setImage] = useState(null);
-
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState('');
 
+  const { address, isConnecting, isDisconnected } = useAccount();
   const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_NFT_STORAGE_KEY;
   const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
-  const createItem = async () => {
+  const createItem = async (event) => {
+    event.preventDefault();
+    const collectionReference = db.collection('NFT');
+    await db.signer((data) => {
+      return {
+        h: 'eth-personal-sign',
+        sig: ethPersonalSign(process.env.NEXT_PUBLIC_COI_PRIVATE, data),
+      };
+    });
     try {
+      if (
+        name === '' ||
+        description === '' ||
+        imageUrl === '' ||
+        price === '' ||
+        !address
+      ) {
+        alert('must include all required fields');
+      }
+      const recordData = await collectionReference.create([
+        nanoid(), //creates unique id for the NFT entry
+        name, //sets the name of the NFT
+        description, //sets the description of the NFT
+        imageUrl, //sets the image for the NFT
+        price, //sets the initial purchase price in ETH
+        address, //creator eth address
+      ]);
+      console.log('recordData', recordData);
       // const data = new File([image], selectedFile, { type: 'image/png' });
       // const ipfsUrl = await storeImage(data);
       // console.log('here is the ipfsUrl', ipfsUrl);
