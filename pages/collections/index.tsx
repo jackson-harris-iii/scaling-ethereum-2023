@@ -1,7 +1,7 @@
 import ListedItems from '../../components/ListedItems';
 import Header from '../../layouts/Header';
 
-const NFTs = [
+export const NFTs = [
   {
     description:
       "alignmint is bringing web2 conservation efforts on-chain, creating donation transparency through verification of resources while allowing wildlife, oceanic, or any other conservation project to rapidly tokenize their efforts. we are incentivizing sustainable projects to provide data that may otherwise go unreported while giving them the power of web3 in seamlessly creating their own data-backed, dynamic NFT collection via template embedded in our UI.\n\nwe are offering our technology to verified projects for a percentage of their NFT sale revenue and are redistributing aggregated data profits back to projects who continue to update their data. our community will be able to see exactly where their money is going when donating to a project as all NFT's are updated by our verified partners to show progress of their efforts.\n\nour tokenization protocol gives projects exposure to investors who need high-quality quantification of impact. as our network grows, we have an opportunity to become one of the largest aggregators of environmental and social impact data, along with extremely granular data that can be used to quantify and model social impact results.",
