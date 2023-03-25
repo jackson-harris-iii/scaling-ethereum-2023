@@ -50,7 +50,7 @@ const CreateNFT = () => {
         price, //sets the initial purchase price in ETH
         address, //creator eth address
       ]);
-      console.log('recordData', recordData);
+      // console.log('recordData', recordData);
       // const data = new File([image], selectedFile, { type: 'image/png' });
       // const ipfsUrl = await storeImage(data);
       // console.log('here is the ipfsUrl', ipfsUrl);

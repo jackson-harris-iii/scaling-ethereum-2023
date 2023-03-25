@@ -1,8 +1,4 @@
 import { useRouter } from 'next/router';
-import { Nfts } from '../../pages/collections';
-
-
-
 
 const NftDetailsPage = ({ nft }) => {
   return (
@@ -16,12 +12,9 @@ const NftDetailsPage = ({ nft }) => {
 
 export default NftDetailsPage;
 
-
-
 // import { useRouter } from 'next/router';
 // import Link from 'next/link';
 // import {NFTs} from '../../pages/collections';
-
 
 // const Collection = ({ nfts }) => {
 //   return (

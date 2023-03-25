@@ -1,6 +1,13 @@
 import ListedItems from '../../components/ListedItems';
 import Header from '../../layouts/Header';
-import HeroContainer from '../../components/Hero'
+import HeroContainer from '../../components/Hero';
+import { useContract, useOwnedNFTs, useNFTs } from '@thirdweb-dev/react';
+import { useEffect, useState } from 'react';
+import { PolygonZkevmTestnet } from '@thirdweb-dev/chains';
+import { SmartContract, ThirdwebSDK } from '@thirdweb-dev/sdk/evm';
+import { abi } from '../../nft-stuff/abi';
+import { BaseContract } from 'ethers';
+import { useAccount } from 'wagmi';
 
 export const NFTs = [
   {
@@ -35,12 +42,71 @@ export const NFTs = [
   },
 ];
 
-
 const HomeDemo1 = () => {
+  const [theContract, setTheContract] = useState();
+  // const getContract = async () => {
+  //   const sdk = new ThirdwebSDK({
+  //     name: 'Polygon zkEVM Testnet',
+  //     //@ts-ignore
+  //     title: 'Polygon zkEVM Testnet',
+  //     chain: 'Polygon',
+  //     rpc: [
+  //       'https://polygon-zkevm-testnet.rpc.thirdweb.com/${THIRDWEB_API_KEY}',
+  //       'https://rpc.public.zkevm-test.net',
+  //     ],
+  //     faucets: [],
+  //     nativeCurrency: {
+  //       name: 'Ether',
+  //       symbol: 'ETH',
+  //       decimals: 18,
+  //     },
+  //     infoURL: 'https://polygon.technology/solutions/polygon-zkevm/',
+  //     shortName: 'testnet-zkEVM-mango',
+  //     chainId: 1442,
+  //     networkId: 1442,
+  //     explorers: [
+  //       {
+  //         name: 'Polygon zkEVM explorer',
+  //         url: 'https://explorer.public.zkevm-test.net',
+  //         standard: 'EIP3091',
+  //       },
+  //     ],
+  //     testnet: true,
+  //     slug: 'polygon-zkevm-testnet',
+  //   });
+  //   const contract = await sdk.getContract(
+  //     '0xdCdE243a27aa7a1Dc59E4F34BFA6E571068a2884',
+  //     abi
+  //   );
+  //   if (contract) {
+  //     //@ts-ignore
+  //     setTheContract(contract);
+  //   }
+  //   console.log('heres the contract', contract);
+  // };
+  const { address, isConnecting, isDisconnected } = useAccount();
+
+  const { contract, isLoading } = useContract(
+    '0xdCdE243a27aa7a1Dc59E4F34BFA6E571068a2884',
+    abi
+  );
+  const { data } = useNFTs(contract);
+
+  // useEffect(() => {
+  //   getContract();
+  // }, []);
+
+  useEffect(() => {
+    console.log('contract', contract);
+  }, [contract]);
+
+  useEffect(() => {
+    console.log('data', data);
+  }, [data]);
 
   return (
-  	<>
-      <Header Title='Scaling Etherum' />
+    <>
+      <Header Title="Scaling Etherum" />
       <HeroContainer
         ClassDiv="hero-section moving section-padding"
         addMoving={true}
@@ -51,7 +117,7 @@ const HomeDemo1 = () => {
         linkUp="https://github.com/jackson-harris-iii/scaling-ethereum-2023"
         linkDown="https://ethglobal.com/showcase/chain-of-impact-knbts"
       />
-        <div className="container-fluid">
+      <div className="container-fluid">
         <div className="row mb-5">
           <Header Title={'se2023-project'} />
         </div>
@@ -64,10 +130,9 @@ const HomeDemo1 = () => {
       {/* <Footer /> */}
     </>
   );
-}
+};
 
 export default HomeDemo1;
-
 
 // const Home = () => {
 //   return (
