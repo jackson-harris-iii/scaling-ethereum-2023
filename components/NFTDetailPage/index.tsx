@@ -26,9 +26,8 @@ const NFTDetail = ( {nft, setSelectedNFT} ) => {
 
   return (
     <>
-        <div>I'm an NFT!</div>
         <button onClick={() => setSelectedNFT(null)}>Go back to my collection</button>
-      <div className="col-12 col-lg-4 mt-s">
+      <div className="col-12 col-lg-4 mt-5">
           <div className="sidebar-area">
               <div className="donnot-miss-widget">
                   <div className="who-we-contant">
@@ -40,7 +39,9 @@ const NFTDetail = ( {nft, setSelectedNFT} ) => {
                               </a>
                           </Link> */}
                       </div>
-                      <h4>{nft.name}</h4>
+                      <br></br>
+                      <br></br>
+                      <h2>{nft.name}</h2>
                   </div>
                   <div className="details-list">
                     {Object.keys(nft).map((key) => (
@@ -54,13 +55,13 @@ const NFTDetail = ( {nft, setSelectedNFT} ) => {
                       </p>
                     ))}
                   </div>
-                  <div className="author-item mb-30">
+                  {/* <div className="author-item mb-30">
                       <div className="author-img ml-0"><img src={nft.image} width="70" alt="" /></div>
                       <div className="author-info">
                           <Link href="/Profile"><h5 className="author-name">N/A</h5></Link>
                           <p className="author-earn mb-0">N/A</p>
                       </div>
-                  </div>
+                  </div> */}
                   {/* <Link href="#test-popup"><a className="open-popup-link more-btn width-100 mt-30">Purchase Now</a></Link> */}
               </div>
           </div>
