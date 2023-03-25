@@ -26,10 +26,8 @@ const NFTDetail = ( {nft, setSelectedNFT} ) => {
 
   return (
     <>
-        {/* <div>I'm an NFT!</div> */}
         <button onClick={() => setSelectedNFT(null)}>Go back to my collection</button>
-        {/* <p style="color:#03091f;">space</p> */}
-      <div className="col-12 col-lg-4 mt-s">
+      <div className="col-12 col-lg-4 mt-5">
           <div className="sidebar-area">
               <div className="donnot-miss-widget">
                   <div className="who-we-contant">

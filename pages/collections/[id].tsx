@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { NFTs } from '.index'
+import { NFTs } from './index'
 import NftDetailsPage from '../../components/NFTDetailPage/NFTDetailPage';
 
 const NftDetail = ({ nft }) => {
@@ -24,8 +24,14 @@ const NftDetail = ({ nft }) => {
   export default NftDetailPage;
 
   export async function getServerSideProps({ params }) {
-    const nftId = params.id;
-    const nft = Nfts.find((nft) => nft.id === nftId);
+    const nftId = Number(params.id)
+    const nft = NFTs.find((nft) => nft.id === nftId);
+
+    if (!nft) {
+        return {
+          notFound: true,
+        };
+      }
 
     return {
       props: {
