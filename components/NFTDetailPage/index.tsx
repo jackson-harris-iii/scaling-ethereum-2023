@@ -260,7 +260,7 @@ const NFTDetail = ({ nft, setSelectedNFT }) => {
             <div className="who-we-contant">
               <div className="pricing-item">
                 <div className="filers-list">
-                  <div className="author-img ml-0 mx-auto">
+                  <div className="container">
                     <img
                       src={nft.image}
                       width="300"

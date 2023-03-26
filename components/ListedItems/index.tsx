@@ -88,17 +88,21 @@ const Item = ({
 
   return (
     <div className="col-12 col-md-6 col-lg-4 col-xl-3" key={nft.id}>
-      <div className="single-feature">
+      <div className="single-feature dd-bg pricing-item">
         <div className="feature-thumb">
           <img className="img-fluid" src={nft.image} alt={nft.name} />
         </div>
         <div className="feature-content">
-          <h4>{nft.name}</h4>
+          <h4 className="text-center">{nft.name}</h4>
           {/* <p>{nft.description}</p> */}
-          <div className="price text-white">Mint Price: {nft.price} ETH</div>
-          <button className="btn btn-primary" onClick={handleClick}>
-            View Details
-          </button>
+          <div className="price text-white text-center">
+            Mint Price: {nft.price} ETH
+          </div>
+          <div className="container text-center">
+            <button className="btn btn-primary m-3" onClick={handleClick}>
+              View Details
+            </button>
+          </div>
           {/* <div className="mt-3">
             {showPriceChange ? (
               <span style={{ color: 'white' }}>
