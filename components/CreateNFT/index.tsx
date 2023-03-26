@@ -115,30 +115,6 @@ const CreateNFT = () => {
                 <div id="success_fail_info"></div>
               </div>
 
-              {/* Fix this do not submit this like  trash dev... */}
-              {/* <div className="col-12 col-md-12">
-                <p className="w-text">Upload Item File</p>
-                <div className="group-file">
-                  <p className="g-text">
-                    PNG, GIF, WEBP, MP4 or MP3. Max 100mb
-                  </p>
-                  <label className="new_Btn more-btn">
-                    <input
-                      style={{ display: 'none' }}
-                      type="file"
-                      required
-                      onChange={changeHandler}
-                    />
-                    {!isFilePicked ? (
-                      'Upload File'
-                    ) : (
-                      <span className="text-white">{selectedFile}</span>
-                    )}
-                  </label>
-                  <br />
-                </div>
-              </div> */}
-
               <div className="col-12 col-md-12">
                 <label className="text-white">Name</label>
                 <div className="group">
