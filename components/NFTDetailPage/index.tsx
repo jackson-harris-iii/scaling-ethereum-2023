@@ -387,7 +387,6 @@ const NFTDetail = ({ nft, setSelectedNFT }) => {
             </div>
 
             <div className="col-12 col-md-12">
-              {/* <label className="text-white">doing this because trash</label> */}
               <label className="text-white">Image IPFS link</label>
               <div className="group">
                 <span className="highlight"></span>
