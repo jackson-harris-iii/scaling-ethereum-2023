@@ -20,13 +20,13 @@ const CreateNFT = () => {
   const [price, setPrice] = useState('');
 
   const { address, isConnecting, isDisconnected } = useAccount();
-  const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_NFT_STORAGE_KEY;
-  const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
+  // const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_NFT_STORAGE_KEY;
+  // const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
   const createItem = async (event) => {
     event.preventDefault();
     const collectionReference = db.collection('NFT');
-    await db.signer((data) => {
+    db.signer((data) => {
       return {
         h: 'eth-personal-sign',
         sig: ethPersonalSign(process.env.NEXT_PUBLIC_COI_PRIVATE, data),
@@ -41,6 +41,7 @@ const CreateNFT = () => {
         !address
       ) {
         alert('must include all required fields');
+        return;
       }
       const recordData = await collectionReference.create([
         nanoid(), //creates unique id for the NFT entry
@@ -50,7 +51,7 @@ const CreateNFT = () => {
         price, //sets the initial purchase price in ETH
         address, //creator eth address
       ]);
-      console.log('recordData', recordData);
+      // console.log('recordData', recordData);
       // const data = new File([image], selectedFile, { type: 'image/png' });
       // const ipfsUrl = await storeImage(data);
       // console.log('here is the ipfsUrl', ipfsUrl);

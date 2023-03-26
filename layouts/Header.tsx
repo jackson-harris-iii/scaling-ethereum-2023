@@ -10,6 +10,7 @@ import { Addshrink } from '../utils';
 import { Polybase } from '@polybase/client';
 import { ethPersonalSign } from '@polybase/eth';
 import { ethers } from 'ethers';
+import { nanoid } from 'nanoid';
 
 const db = new Polybase({
   defaultNamespace:
@@ -17,19 +18,28 @@ const db = new Polybase({
 });
 
 const checkForUser = async (address: string) => {
-  const col = db.collection('User');
-  const doc = col.record(address);
-  const user = await doc.get().catch(() => null);
-  if (user) {
-    return;
-  }
-
   await db.signer((data) => {
     return {
       h: 'eth-personal-sign',
       sig: ethPersonalSign(process.env.NEXT_PUBLIC_COI_PRIVATE, data),
     };
   });
+
+  // const metaCol = db.collection('CollectionMetadata');
+  // const metaRecords = await metaCol.get();
+
+  // if (metaRecords.data.length === 0) {
+  //   const init = await metaCol.create([nanoid()]);
+  //   console.log('init metaData', init);
+  // } else {
+  //   console.log('meta records made', metaRecords);
+  // }
+  const col = db.collection('User');
+  const doc = col.record(address);
+  const user = await doc.get().catch(() => null);
+  if (user) {
+    return;
+  }
   const collectionReference = db.collection('User');
 
   const { data } = await collectionReference.where('id', '==', address).get();
@@ -73,17 +83,22 @@ function Header({ Title }) {
   // }
 
   return (
-    <div>
+    <div className="mb-5">
       {/* <Preloader Title={Title} /> */}
       <nav
         className="navbar navbar-expand-lg navbar-white fixed-top"
         id="banner"
+        style={{
+          marginTop: '0px',
+          zIndex: `100`,
+          // position: 'absolute',
+          width: '100vw',
+          backdropFilter: 'blur(8px)',
+        }}
       >
         <div className="container">
           <Link legacyBehavior href="/">
-            <a className="navbar-brand">
-              {/* <img src={NavbarLogo.src} alt="logo" /> */}
-            </a>
+            <a className="navbar-brand">Chain of Impact</a>
           </Link>
 
           <button

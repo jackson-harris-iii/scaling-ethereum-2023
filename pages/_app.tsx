@@ -19,6 +19,8 @@ import {
   optimism,
   scrollTestnet,
 } from 'wagmi/chains'; //scrollTestnet was not found???
+import { PolygonZkevmTestnet } from '@thirdweb-dev/chains';
+import { ThirdwebProvider } from '@thirdweb-dev/react';
 
 function MyApp({ Component, pageProps }) {
   const chains = [
@@ -93,9 +95,41 @@ function MyApp({ Component, pageProps }) {
           crossOrigin="anonymous"
         ></script>
       </Head>
-      <WagmiConfig client={wagmiClient}>
-        <Component {...pageProps} />
-      </WagmiConfig>
+      <ThirdwebProvider
+        activeChain={{
+          name: 'Polygon zkEVM Testnet',
+          //@ts-ignore
+          title: 'Polygon zkEVM Testnet',
+          chain: 'Polygon',
+          rpc: [
+            'https://polygon-zkevm-testnet.rpc.thirdweb.com/${THIRDWEB_API_KEY}',
+            'https://rpc.public.zkevm-test.net',
+          ],
+          faucets: [],
+          nativeCurrency: {
+            name: 'Ether',
+            symbol: 'ETH',
+            decimals: 18,
+          },
+          infoURL: 'https://polygon.technology/solutions/polygon-zkevm/',
+          shortName: 'testnet-zkEVM-mango',
+          chainId: 1442,
+          networkId: 1442,
+          explorers: [
+            {
+              name: 'Polygon zkEVM explorer',
+              url: 'https://explorer.public.zkevm-test.net',
+              standard: 'EIP3091',
+            },
+          ],
+          testnet: true,
+          slug: 'polygon-zkevm-testnet',
+        }}
+      >
+        <WagmiConfig client={wagmiClient}>
+          <Component {...pageProps} />
+        </WagmiConfig>
+      </ThirdwebProvider>
       <Web3Modal
         projectId={process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID}
         ethereumClient={ethereumClient}
