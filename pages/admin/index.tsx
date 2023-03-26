@@ -11,7 +11,7 @@ const db = new Polybase({
 
 const AdminDashboard = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
-  const [nfts, setNFTs] = useState();
+  const [nfts, setNFTs] = useState<any[]>();
 
   const getNFTs = async () => {
     try {

@@ -20,8 +20,8 @@ const CreateNFT = () => {
   const [price, setPrice] = useState('');
 
   const { address, isConnecting, isDisconnected } = useAccount();
-  const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_NFT_STORAGE_KEY;
-  const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
+  // const NFT_STORAGE_TOKEN = process.env.NEXT_PUBLIC_NFT_STORAGE_KEY;
+  // const client = new NFTStorage({ token: NFT_STORAGE_TOKEN });
 
   const createItem = async (event) => {
     event.preventDefault();

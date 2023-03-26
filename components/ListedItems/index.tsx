@@ -1,16 +1,50 @@
-// import Link from 'next'
-// import InfoComponent from '../InfoComponent'
-import React from 'react';
-// import Item from './item';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import NFTDetailPage from '../NFTDetailPage';
-// import {ListedItemsData} from '../../data/data-components/data-ListedItems.js'
-// import ListedItemsData from './data.json'
+import { Polybase } from '@polybase/client';
+import { ethPersonalSign } from '@polybase/eth';
+import { useRouter } from 'next/router';
 
-// import './listedItems.css'
+const db = new Polybase({
+  defaultNamespace:
+    'pk/0x491e5edec4b6e998d4c11f0b6fa0eb5f9c0f83f2abb302bddb0027ad9bc1a9f35263e3033a635022be1fe3c85d213ccc9980b57edf3032b50b73ca3e398d76db/se-2023',
+});
 
 const ListedItems = ({ nfts, admin }) => {
+  const router = useRouter();
   const [selectedNFT, setSelectedNFT] = useState(null);
+  const [nftPrice, setNftPrice] = useState('');
+  const [showPriceChange, setShowPriceChange] = useState(false);
+
+  const handlePriceChange = (event) => {
+    setNftPrice(event.target.value);
+  };
+
+  const updatePrice = async (event, nft) => {
+    event.preventDefault();
+    console.log('event', event);
+    console.log('nft', nft);
+    const col = db.collection('NFT');
+    await db.signer((data) => {
+      return {
+        h: 'eth-personal-sign',
+        sig: ethPersonalSign(process.env.NEXT_PUBLIC_COI_PRIVATE, data),
+      };
+    });
+
+    try {
+      const response = await col.record(nft.id).call('setPrice', [nftPrice]);
+      console.log('here is the response', response);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  useEffect(() => {
+    if (router.pathname.includes('admin')) {
+      setShowPriceChange(true);
+    }
+  }, []);
 
   if (selectedNFT) {
     return <NFTDetailPage nft={selectedNFT} setSelectedNFT={setSelectedNFT} />;
@@ -19,12 +53,19 @@ const ListedItems = ({ nfts, admin }) => {
   return (
     <section className="features section-padding-0-100 ">
       <div className="container">
-        {admin ? <></> : <div style={{ color: 'white' }}>Collections Page</div>}
+        {admin ? <></> : <h3 style={{ color: 'white' }}>Explore</h3>}
 
         <div className="row align-items-center">
           {nfts &&
             nfts.map((item, i) => (
-              <Item key={i} nft={item} setSelectedNFT={setSelectedNFT} />
+              <Item
+                key={item.id}
+                nft={item}
+                setSelectedNFT={setSelectedNFT}
+                handlePriceChange={handlePriceChange}
+                showPriceChange={showPriceChange}
+                updatePrice={updatePrice}
+              />
             ))}
         </div>
       </div>
@@ -36,8 +77,13 @@ export default ListedItems;
 
 export { Item };
 
-
-const Item = ({ nft, setSelectedNFT }) => {
+const Item = ({
+  nft,
+  setSelectedNFT,
+  handlePriceChange,
+  showPriceChange,
+  updatePrice,
+}) => {
   const handleClick = () => {
     setSelectedNFT(nft);
   };
@@ -47,14 +93,26 @@ const Item = ({ nft, setSelectedNFT }) => {
       <div className="single-feature">
         <div className="feature-thumb">
           <img className="img-fluid" src={nft.image} alt={nft.name} />
-          <div className="price">{nft.price}</div>
         </div>
         <div className="feature-content">
           <h4>{nft.name}</h4>
-          <p>{nft.description}</p>
+          {/* <p>{nft.description}</p> */}
+          <div className="price text-white">Mint Price: {nft.price} ETH</div>
           <button className="btn btn-primary" onClick={handleClick}>
             View Details
           </button>
+          {/* <div className="mt-3">
+            {showPriceChange ? (
+              <span style={{ color: 'white' }}>
+                update price<input onChange={handlePriceChange}></input>
+                <button onClick={(event) => updatePrice(event, nft)}>
+                  submit update
+                </button>
+              </span>
+            ) : (
+              <></>
+            )}
+          </div> */}
         </div>
       </div>
     </div>

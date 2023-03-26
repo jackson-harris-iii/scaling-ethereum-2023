@@ -11,7 +11,7 @@ const HeroContainer = ({
 	return(
 	    <section className={ClassDiv} id="home">
 	        {addMoving && <div className="moving-bg"></div>}
-	        <div className="hero-section-content">
+	        <div className="hero-section-content mt-5">
 	            <div className="container ">
 	                <div className="row align-items-center">
 	                    <div className="col-12 col-lg-6 col-md-12">
@@ -19,7 +19,6 @@ const HeroContainer = ({
 	                            <div className="promo-section">
 	                                <h3 className="special-head gradient-text">{title}</h3>
 	                            </div>
-                                <h1>Chain of Impact</h1>
                                 <br></br>
 	                            <h1>{textUp} <span className="gradient-t">{SpanTex}</span> </h1>
 	                            <p className="w-text">{textDown}</p>
