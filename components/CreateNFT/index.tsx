@@ -26,7 +26,7 @@ const CreateNFT = () => {
   const createItem = async (event) => {
     event.preventDefault();
     const collectionReference = db.collection('NFT');
-    await db.signer((data) => {
+    db.signer((data) => {
       return {
         h: 'eth-personal-sign',
         sig: ethPersonalSign(process.env.NEXT_PUBLIC_COI_PRIVATE, data),
@@ -41,6 +41,7 @@ const CreateNFT = () => {
         !address
       ) {
         alert('must include all required fields');
+        return;
       }
       const recordData = await collectionReference.create([
         nanoid(), //creates unique id for the NFT entry

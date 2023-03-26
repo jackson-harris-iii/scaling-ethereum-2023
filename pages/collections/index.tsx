@@ -21,10 +21,9 @@ const HomeDemo1 = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
 
   const { contract, isLoading } = useContract(
-    '0xdCdE243a27aa7a1Dc59E4F34BFA6E571068a2884',
+    '0x031Ee64fB75a3d23b7Ef4F8c44b3BCE1bB4D728b',
     abi
   );
-  // const { data } = useNFTs(contract);
 
   const getNFTs = async () => {
     try {

@@ -14,7 +14,7 @@
 
 .hero-section.moving{
     overflow: hidden;
-    background: url(../../assets/img/bg-img/header-1.jpg) no-repeat center top; 
+    background: url(../../assets/img/bg-img/header-1.png) no-repeat center top; 
     background-size: cover;
 }
 

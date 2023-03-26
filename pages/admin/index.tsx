@@ -11,39 +11,59 @@ const db = new Polybase({
 
 const AdminDashboard = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
-  const [nfts, setNFTs] = useState<any[]>();
+  const [issued, setIssued] = useState<any[]>();
+  const [acquired, setAcquired] = useState<any[]>();
 
-  const getNFTs = async () => {
+  const getIssued = async () => {
     try {
       const col = db.collection('NFT');
       const { data } = await col.where('creator', '==', address).get();
       console.log('here is the data', data);
       let temps = data.map((nft) => nft.data);
-      setNFTs(temps);
+      setIssued(temps);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  const getAcquired = async () => {
+    try {
+      const col = db.collection('NFT');
+      const { data } = await col.where('owner', '==', address).get();
+      console.log('here is the data', data);
+      let tempdata = data.map((nft) => nft.data);
+      setAcquired(tempdata);
     } catch (error) {
       alert(error);
     }
   };
 
   useEffect(() => {
-    getNFTs();
+    getIssued();
+    getAcquired();
   }, [address]);
 
   return (
-    <div className="container">
+    <div className="container pt-5">
       <Header Title={'se2023-project'} />
-      <div className=" row justify-content-center">
+      {/* <div className=" row justify-content-center">
         <div className="col-6 mt-5 text-center mb-5" style={{ color: 'white' }}>
           <h1>Dashboard</h1>
         </div>
+      </div> */}
+
+      <h4 className=" text-center">Acquired Collectibles</h4>
+      <div className="pt-5">
+        <ListedItems nfts={acquired} admin={true} />
       </div>
+      <h4 className=" text-center mt-5">Issued Collectibles</h4>
       <div className=" row justify-content-center mb-5">
-        <a className="btn more-btn" href="/admin/create">
-          Create NFT
+        <a className="btn more-btn mt-3" href="/admin/create">
+          Create Collectible
         </a>
       </div>
-      <h4 className=" text-center">My Created NFTs</h4>
-      <ListedItems nfts={nfts} admin={true} />
+      <div className="pt-5">
+        <ListedItems nfts={issued} admin={true} />
+      </div>
     </div>
   );
 };

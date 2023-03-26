@@ -22,13 +22,13 @@ const NftDetailPage = ({ nft }) => {
 
 export default NftDetailPage;
 
-export async function getServerSideProps({ params }) {
-  const nftId = Number(params.id);
-  const nft = NFTs.find((nft) => nft.id === nftId);
+// export async function getServerSideProps({ params }) {
+//   const nftId = Number(params.id);
+//   const nft = NFTs.find((nft) => nft.id === nftId);
 
-  if (!nft) {
-    return {
-      notFound: true,
-    };
-  }
-}
+//   if (!nft) {
+//     return {
+//       notFound: true,
+//     };
+//   }
+// }

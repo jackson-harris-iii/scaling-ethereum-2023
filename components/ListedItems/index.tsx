@@ -22,10 +22,8 @@ const ListedItems = ({ nfts, admin }) => {
 
   const updatePrice = async (event, nft) => {
     event.preventDefault();
-    console.log('event', event);
-    console.log('nft', nft);
     const col = db.collection('NFT');
-    await db.signer((data) => {
+    db.signer((data) => {
       return {
         h: 'eth-personal-sign',
         sig: ethPersonalSign(process.env.NEXT_PUBLIC_COI_PRIVATE, data),
@@ -89,7 +87,7 @@ const Item = ({
   };
 
   return (
-    <div className="col-12 col-md-6 col-lg-4 col-xl-3">
+    <div className="col-12 col-md-6 col-lg-4 col-xl-3" key={nft.id}>
       <div className="single-feature">
         <div className="feature-thumb">
           <img className="img-fluid" src={nft.image} alt={nft.name} />
